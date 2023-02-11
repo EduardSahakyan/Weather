@@ -14,14 +14,15 @@ public class MainViewModel extends BaseViewModel {
         this.getCurrentWeatherUseCase = getCurrentWeatherUseCase;
     }
 
-    public Weather getCurrentWeather(String place) {
+    SubmissionPublisher<Weather> publisher = new SubmissionPublisher<>();
+
+    public void getCurrentWeather(String place) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<Weather> future = executorService.submit(() -> getCurrentWeatherUseCase.execute(place));
         try {
-            future.get();
+            publisher.submit(future.get());
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 }
