@@ -3,6 +3,7 @@ package org.example.presentation.mainscreen;
 import org.example.common.di.AppComponent;
 import org.example.domain.entities.Weather;
 import org.example.presentation.common.BaseScreen;
+import org.example.presentation.common.LiveData;
 
 import java.util.Scanner;
 
@@ -12,6 +13,7 @@ public class MainScreen extends BaseScreen {
 
     @Override
     public void onStart() {
+        observers();
         showMenu();
     }
 
@@ -34,8 +36,7 @@ public class MainScreen extends BaseScreen {
                 }
                 case "c": {
                     String place = scanner.nextLine();
-                    Weather weather = viewModel.getCurrentWeather(place);
-                    System.out.println(weather);
+                    viewModel.getCurrentWeather(place);
                     break;
                 }
                 case "s": {
@@ -46,5 +47,15 @@ public class MainScreen extends BaseScreen {
                 }
             }
         } while (true);
+    }
+
+    private void observers() {
+        viewModel.publisher.subscribe(new LiveData<>() {
+            @Override
+            public void onNext(Weather item) {
+                super.onNext(item);
+                System.out.println(item);
+            }
+        });
     }
 }
