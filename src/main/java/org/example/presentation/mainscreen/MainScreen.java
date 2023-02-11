@@ -33,7 +33,8 @@ public class MainScreen extends BaseScreen {
                     break;
                 }
                 case "c": {
-                    Weather weather = viewModel.getCurrentWeather("London");
+                    String place = scanner.nextLine();
+                    Weather weather = viewModel.getCurrentWeather(place);
                     System.out.println(weather);
                     break;
                 }

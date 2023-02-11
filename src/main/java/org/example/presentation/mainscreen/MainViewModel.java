@@ -18,9 +18,10 @@ public class MainViewModel extends BaseViewModel {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<Weather> future = executorService.submit(() -> getCurrentWeatherUseCase.execute(place));
         try {
-            return future.get();
+            future.get();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 }
