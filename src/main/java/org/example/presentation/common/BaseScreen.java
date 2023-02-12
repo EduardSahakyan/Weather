@@ -6,6 +6,8 @@ public abstract class BaseScreen implements Navigator {
 
     public abstract void onStart();
 
+    public abstract void onFinish();
+
     @Override
     public void navigateTo(BaseScreen screen) {
         screen.onStart();

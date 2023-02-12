@@ -4,7 +4,6 @@ import org.example.common.di.AppComponent;
 import org.example.domain.entities.Weather;
 import org.example.presentation.common.BaseScreen;
 import org.example.presentation.common.LiveData;
-
 import java.util.Scanner;
 
 public class MainScreen extends BaseScreen {
@@ -15,6 +14,11 @@ public class MainScreen extends BaseScreen {
     public void onStart() {
         observers();
         showMenu();
+    }
+
+    @Override
+    public void onFinish() {
+        viewModel.onFinish();
     }
 
     private void showMenuText() {
@@ -31,6 +35,7 @@ public class MainScreen extends BaseScreen {
             switch (scanner.nextLine()) {
                 case "q": {
                     System.out.println("Exit");
+                    onFinish();
                     System.exit(0);
                     break;
                 }
@@ -50,7 +55,7 @@ public class MainScreen extends BaseScreen {
     }
 
     private void observers() {
-        viewModel.publisher.subscribe(new LiveData<>() {
+        viewModel.getPublisher().subscribe(new LiveData<>() {
             @Override
             public void onNext(Weather item) {
                 super.onNext(item);

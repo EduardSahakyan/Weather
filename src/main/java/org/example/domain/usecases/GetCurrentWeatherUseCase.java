@@ -1,9 +1,10 @@
 package org.example.domain.usecases;
 
+import io.reactivex.rxjava3.core.Single;
 import org.example.domain.entities.Weather;
 
 public interface GetCurrentWeatherUseCase {
 
-    Weather execute(String place);
+    Single<Weather> execute(String place);
 
 }

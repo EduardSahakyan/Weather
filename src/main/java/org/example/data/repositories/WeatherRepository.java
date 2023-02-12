@@ -1,5 +1,6 @@
 package org.example.data.repositories;
 
+import io.reactivex.rxjava3.core.Single;
 import org.example.data.datasources.remote.WeatherRemoteDataSource;
 import org.example.data.datasources.remote.dto.WeatherDto;
 import org.example.data.mappers.WeatherMapper;
@@ -20,8 +21,8 @@ public class WeatherRepository implements WeatherGateway {
     }
 
     @Override
-    public Weather getCurrentWeather(String place) {
-        WeatherDto dto = weatherRemoteDataSource.getCurrentWeather(place);
-        return weatherMapper.toEntity(dto);
+    public Single<Weather> getCurrentWeather(String place) {
+        Single<WeatherDto> dto = weatherRemoteDataSource.getCurrentWeather(place);
+        return dto.map(weatherMapper::toEntity);
     }
 }

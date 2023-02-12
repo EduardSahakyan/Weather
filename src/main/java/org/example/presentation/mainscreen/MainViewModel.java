@@ -1,5 +1,7 @@
 package org.example.presentation.mainscreen;
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.example.domain.entities.Weather;
 import org.example.domain.usecases.GetCurrentWeatherUseCase;
 import org.example.presentation.common.BaseViewModel;
@@ -14,15 +16,18 @@ public class MainViewModel extends BaseViewModel {
         this.getCurrentWeatherUseCase = getCurrentWeatherUseCase;
     }
 
-    SubmissionPublisher<Weather> publisher = new SubmissionPublisher<>();
+    private final SubmissionPublisher<Weather> publisher = new SubmissionPublisher<>();
+
+    public SubmissionPublisher<Weather> getPublisher() {
+        return publisher;
+    }
 
     public void getCurrentWeather(String place) {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        Future<Weather> future = executorService.submit(() -> getCurrentWeatherUseCase.execute(place));
-        try {
-            publisher.submit(future.get());
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        disposable = new CompositeDisposable();
+        disposable.add(getCurrentWeatherUseCase.execute(place)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.single())
+                .subscribe(publisher::submit, throwable -> {})
+        );
     }
 }

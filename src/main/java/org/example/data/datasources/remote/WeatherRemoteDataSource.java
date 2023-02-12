@@ -1,9 +1,10 @@
 package org.example.data.datasources.remote;
 
+import io.reactivex.rxjava3.core.Single;
 import org.example.data.datasources.remote.dto.WeatherDto;
 
 public interface WeatherRemoteDataSource {
 
-    WeatherDto getCurrentWeather(String place);
+    Single<WeatherDto> getCurrentWeather(String place);
 
 }

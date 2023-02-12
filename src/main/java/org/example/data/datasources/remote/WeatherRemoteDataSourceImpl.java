@@ -1,5 +1,6 @@
 package org.example.data.datasources.remote;
 
+import io.reactivex.rxjava3.core.Single;
 import org.example.data.datasources.remote.api.ApiService;
 import org.example.data.datasources.remote.dto.WeatherDto;
 import retrofit2.Response;
@@ -13,16 +14,7 @@ public class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
     }
 
     @Override
-    public WeatherDto getCurrentWeather(String place) {
-        try {
-            Response<WeatherDto> response = apiService.getCurrentWeather(place).execute();
-            if (response.isSuccessful()) {
-                return response.body();
-            } else {
-                throw new Exception(response.message());
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public Single<WeatherDto> getCurrentWeather(String place) {
+        return apiService.getCurrentWeather(place);
     }
 }
