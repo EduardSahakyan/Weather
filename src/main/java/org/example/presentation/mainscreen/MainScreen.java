@@ -18,7 +18,7 @@ public class MainScreen extends BaseScreen {
 
     @Override
     public void onFinish() {
-        viewModel.onFinish();
+        viewModel.onFinish(); // aysinqn henc ekrany finish a ylnum, et tasky clear enq anum, vor el chqashi
     }
 
     private void showMenuText() {
