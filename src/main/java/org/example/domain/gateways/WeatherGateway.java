@@ -7,4 +7,8 @@ public interface WeatherGateway {
 
     Single<Weather> getCurrentWeather(String place);
 
+    Weather getWeatherFromFiles(String place);
+
+    void saveWeatherToFile(Weather weather);
+
 }

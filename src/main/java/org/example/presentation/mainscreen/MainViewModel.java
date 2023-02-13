@@ -4,16 +4,25 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.example.domain.entities.Weather;
 import org.example.domain.usecases.GetCurrentWeatherUseCase;
+import org.example.domain.usecases.GetWeatherLocalUseCase;
+import org.example.domain.usecases.SaveWeatherLocalUseCase;
 import org.example.presentation.common.BaseViewModel;
 
-import java.util.concurrent.*;
+import java.util.concurrent.SubmissionPublisher;
 
 public class MainViewModel extends BaseViewModel {
 
     private final GetCurrentWeatherUseCase getCurrentWeatherUseCase;
+    private final SaveWeatherLocalUseCase saveWeatherLocalUseCase;
+    private final GetWeatherLocalUseCase getWeatherLocalUseCase;
 
-    public MainViewModel(GetCurrentWeatherUseCase getCurrentWeatherUseCase) {
+    public MainViewModel(
+            GetCurrentWeatherUseCase getCurrentWeatherUseCase,
+            SaveWeatherLocalUseCase saveWeatherLocalUseCase,
+            GetWeatherLocalUseCase getWeatherLocalUseCase) {
         this.getCurrentWeatherUseCase = getCurrentWeatherUseCase;
+        this.saveWeatherLocalUseCase = saveWeatherLocalUseCase;
+        this.getWeatherLocalUseCase = getWeatherLocalUseCase;
     }
 
     private final SubmissionPublisher<Weather> publisher = new SubmissionPublisher<>();
@@ -27,7 +36,17 @@ public class MainViewModel extends BaseViewModel {
         disposable.add(getCurrentWeatherUseCase.execute(place)// kanchum em use casey vory Single<Weather> a return anum
                 .subscribeOn(Schedulers.io()) // dra vra kanchum em esi, vory cuyc a talis te et im usecasei metody vor Threadum a ashxatelu
                 .observeOn(Schedulers.single()) // Esi kanchum es vor nshes te ardyunqy vor threadum es lselu, single-y eti mer himikva threadna vor Screeny bacuma
-                .subscribe(publisher::submit, throwable -> {}));
+                .subscribe(weather -> {
+                    publisher.submit(weather);
+                    saveWeatherLocalUseCase.execute(weather);
+                }, throwable -> {
+                    try {
+                        Weather weather = getWeatherLocalUseCase.execute(place);
+                        publisher.submit(weather);
+                    } catch (RuntimeException e) {
+                        System.out.println("File not found");
+                    }
+                }));
         //Rx-um miqani hat threadner ka arandznacrac konkret ashxatanqi hamar, ete grel kardalu het gorc unenq eti io a
         // Aysinqn io threadum menq qashum enq datan, henc datan hasnuma single threadum cuyc enq talu
         // subscribe metodnel nra hamar te henc hasni datan inch pti anenq
