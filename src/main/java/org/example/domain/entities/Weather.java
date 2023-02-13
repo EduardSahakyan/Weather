@@ -1,6 +1,8 @@
 package org.example.domain.entities;
 
-public class Weather {
+import java.io.Serializable;
+
+public class Weather implements Serializable { //mi moraci
 
     private final String placeName;
     private final String country;
