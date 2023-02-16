@@ -16,6 +16,7 @@ public class MainViewModel extends BaseViewModel {
     private final SaveWeatherLocalUseCase saveWeatherLocalUseCase;
     private final GetWeatherLocalUseCase getWeatherLocalUseCase;
 
+
     public MainViewModel(
             GetCurrentWeatherUseCase getCurrentWeatherUseCase,
             SaveWeatherLocalUseCase saveWeatherLocalUseCase,
