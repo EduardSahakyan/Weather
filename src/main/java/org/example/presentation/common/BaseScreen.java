@@ -10,6 +10,7 @@ public abstract class BaseScreen implements Navigator {
 
     @Override
     public void navigateTo(BaseScreen screen) {
+        onFinish();
         screen.onStart();
     }
 }

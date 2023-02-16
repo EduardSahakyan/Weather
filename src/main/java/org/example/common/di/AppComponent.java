@@ -17,6 +17,7 @@ import org.example.domain.usecases.*;
 import org.example.presentation.loginscreen.LogInViewModel;
 import org.example.presentation.mainscreen.MainViewModel;
 import org.example.presentation.signupscreen.SignUpViewModel;
+import org.example.presentation.welcomescreen.WelcomeViewModel;
 
 import java.util.prefs.Preferences;
 
