@@ -15,18 +15,20 @@ public class LogInViewModel extends BaseViewModel {
         this.logInUseCase = logInUseCase;
     }
 
-    private final SubmissionPublisher<Boolean> successful = new SubmissionPublisher<>();
+    private final SubmissionPublisher<Integer> successful = new SubmissionPublisher<>();
 
     public void logIn(String login, String password) {
         try {
             logInUseCase.execute(login, password);
-            successful.submit(true);
-        } catch (UserNotFoundException | IncorrectPasswordException e) {
-            successful.submit(false);
+            successful.submit(0);
+        } catch (UserNotFoundException e) {
+            successful.submit(1);
+        } catch (IncorrectPasswordException e) {
+            successful.submit(2);
         }
     }
 
-    public SubmissionPublisher<Boolean> getSuccessful() {
+    public SubmissionPublisher<Integer> getSuccessful() {
         return successful;
     }
 

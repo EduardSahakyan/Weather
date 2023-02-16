@@ -1,10 +1,8 @@
 package org.example.presentation.signupscreen;
 
 import org.example.common.exceptions.UserExistException;
-import org.example.domain.entities.Weather;
 import org.example.domain.usecases.SignUpUseCase;
 import org.example.presentation.common.BaseViewModel;
-
 import java.util.concurrent.SubmissionPublisher;
 
 public class SignUpViewModel extends BaseViewModel {
@@ -23,7 +21,7 @@ public class SignUpViewModel extends BaseViewModel {
             signUpUseCase.execute(login, password);
             isSuccess.submit(true);
         } catch (UserExistException e) {
-            isSuccess.submit(false);
+            isSuccess.submit(false);;
         }
     }
 

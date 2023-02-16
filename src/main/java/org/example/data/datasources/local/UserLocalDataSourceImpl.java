@@ -25,10 +25,10 @@ public class UserLocalDataSourceImpl implements UserLocalDataSource{
         String pas = preferences.get(login, "0");
         if (pas.equals("0")){
             throw new UserNotFoundException("this user doesn't exist");
-        } else if (pas.equals(password)) {
+        } else if (!(pas.equals(password))) {
             throw new IncorrectPasswordException("Incorrect password");
         } else {
-            preferences.put(login, password);
+
         }
     }
 }

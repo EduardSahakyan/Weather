@@ -1,10 +1,10 @@
 package org.example.presentation.loginscreen;
 
 import org.example.common.di.AppComponent;
+import org.example.common.exceptions.UserNotFoundException;
 import org.example.presentation.common.BaseScreen;
 import org.example.presentation.common.LiveData;
 import org.example.presentation.mainscreen.MainScreen;
-import org.example.presentation.signupscreen.SignUpViewModel;
 
 import java.util.Scanner;
 
@@ -33,14 +33,16 @@ public class LogInScreen extends BaseScreen {
         }
     }
     private void observers() {
-        viewModel.getSuccessful().subscribe(new LiveData<Boolean>() {
+        viewModel.getSuccessful().subscribe(new LiveData<Integer>() {
             @Override
-            public void onNext(Boolean successful) {
+            public void onNext(Integer successful) {
                 super.onNext(successful);
-                if (successful) {
+                if (successful == 0) {
                     navigateTo(new MainScreen());
+                } else if (successful == 1) {
+                    System.out.println("This user doesn't exist");
                 } else {
-                    System.out.println("User with this login don't exist");
+                    System.out.println("Incorrect password");
                 }
             }
         });
