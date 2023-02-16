@@ -7,7 +7,6 @@ import org.example.domain.usecases.GetCurrentWeatherUseCase;
 import org.example.domain.usecases.GetWeatherLocalUseCase;
 import org.example.domain.usecases.SaveWeatherLocalUseCase;
 import org.example.presentation.common.BaseViewModel;
-
 import java.util.concurrent.SubmissionPublisher;
 
 public class MainViewModel extends BaseViewModel {
@@ -15,6 +14,7 @@ public class MainViewModel extends BaseViewModel {
     private final GetCurrentWeatherUseCase getCurrentWeatherUseCase;
     private final SaveWeatherLocalUseCase saveWeatherLocalUseCase;
     private final GetWeatherLocalUseCase getWeatherLocalUseCase;
+
 
     public MainViewModel(
             GetCurrentWeatherUseCase getCurrentWeatherUseCase,
