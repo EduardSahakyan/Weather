@@ -14,6 +14,7 @@ import org.example.data.repositories.WeatherRepository;
 import org.example.domain.gateways.UserGateway;
 import org.example.domain.gateways.WeatherGateway;
 import org.example.domain.usecases.*;
+import org.example.presentation.loginscreen.LogInViewModel;
 import org.example.presentation.mainscreen.MainViewModel;
 import org.example.presentation.signupscreen.SignUpViewModel;
 
@@ -36,8 +37,10 @@ public class AppComponent {
     private final GetCurrentWeatherUseCase getCurrentWeatherUseCase = new GetCurrentWeatherUseCaseImpl(weatherGateway);
     private final SaveWeatherLocalUseCase saveWeatherLocalUseCase = new SaveWeatherLocalUseCaseImpl(weatherGateway);
     private final SignUpUseCase signUpUseCase = new SignUpUseCaseImpl(userGateway);
+    private final LogInUseCase logInUseCase = new LogInUseCaseImpl(userGateway);
     private final GetWeatherLocalUseCase getWeatherLocalUseCase= new GetWeatherLocalUseCaseImpl(weatherGateway);
     private final SignUpViewModel signUpViewModel = new SignUpViewModel(signUpUseCase);
+    private final LogInViewModel logInViewModel = new LogInViewModel(logInUseCase);
     private final MainViewModel mainViewModel = new MainViewModel(getCurrentWeatherUseCase, saveWeatherLocalUseCase, getWeatherLocalUseCase);
 
     public static synchronized AppComponent getInstance() {
@@ -54,6 +57,7 @@ public class AppComponent {
     public SignUpViewModel getSignUpViewModel() {
         return signUpViewModel;
     }
+    public LogInViewModel getLogInViewModel(){return logInViewModel; }
 
     public Preferences getPreferences() {
         return preferences;
