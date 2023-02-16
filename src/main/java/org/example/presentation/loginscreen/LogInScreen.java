@@ -41,7 +41,7 @@ public class LogInScreen extends BaseScreen {
                     navigateTo(new MainScreen());
                 } else if (successful == 1) {
                     System.out.println("This user doesn't exist");
-                } else {
+                } else if (successful == 2){
                     System.out.println("Incorrect password");
                 }
             }

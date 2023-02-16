@@ -21,7 +21,7 @@ public class SignUpViewModel extends BaseViewModel {
             signUpUseCase.execute(login, password);
             isSuccess.submit(true);
         } catch (UserExistException e) {
-            isSuccess.submit(false);;
+            isSuccess.submit(false);
         }
     }
 

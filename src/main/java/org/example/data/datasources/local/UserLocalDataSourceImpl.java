@@ -27,8 +27,6 @@ public class UserLocalDataSourceImpl implements UserLocalDataSource{
             throw new UserNotFoundException("this user doesn't exist");
         } else if (!(pas.equals(password))) {
             throw new IncorrectPasswordException("Incorrect password");
-        } else {
-
         }
     }
 }
